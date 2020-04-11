@@ -1,40 +1,45 @@
 import React from 'react';
 import Layout from '../common/Layout';
+import PostPreview from '../components/PostPreview';
 import { useQuery } from 'react-apollo-hooks';
-import ggl from 'graphql-tag';
-import { Alert } from 'reactstrap';
+import gql from 'graphql-tag';
+import { Spinner } from 'reactstrap';
 
-const ALL_POST = ggl`
+const ALL_POST = gql`
     query getPosts{
         getPosts{
             _id
             title
             content
+            author {
+                _id
+                first_name
+            }
         }
     }
 `;
 
 const Home = () => {
     const { data, loading, error } = useQuery(ALL_POST);
-    if ( error ) {return <h1>Hubo un error, intenta recargando. :c</h1>}
-    if ( loading === true ) {return <h1>Cargando!</h1>}
     return(
         <>
-        <Layout head="MI BLOG FAVORITO: POSTEANDO" subheading="Crea una cuenta y empiza a postear">
-            <main>
+        <Layout head="Clean Blog" subheading="A Blog Theme by Start Bootstrap">
+            <main className="container">
                 {
-                    data.getPosts.map(post => (
-                        <div key={post._id}>
-                            <h2> {post.title} </h2>
-                            <h3> {post.content} </h3>
-                        </div>
-                    ))
+                    loading 
+                        ? <>
+                            <h1>Cargando!</h1>
+                            <Spinner color="dark" />
+                        </> 
+                        : error 
+                            ? <h1>Hubo un error, intenta recargando. :c { error } </h1>
+                            : data.getPosts.map(( post ) => (
+                                <PostPreview _id={ post._id } title={ post.title } author={ post.author } key={ post._id } />
+                            ))
+                    
                     
                 }
             </main>
-            <Alert color="primary">
-                This is a primary alert — check it out!
-            </Alert>
         </Layout>
         </>
     );
