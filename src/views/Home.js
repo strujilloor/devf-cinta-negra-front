@@ -10,10 +10,9 @@ const ALL_POST = gql`
         getPosts{
             _id
             title
-            content
             author {
-                _id
                 first_name
+                _id
             }
         }
     }
@@ -36,8 +35,6 @@ const Home = () => {
                             : data.getPosts.map(( post ) => (
                                 <PostPreview _id={ post._id } title={ post.title } author={ post.author } key={ post._id } />
                             ))
-                    
-                    
                 }
             </main>
         </Layout>

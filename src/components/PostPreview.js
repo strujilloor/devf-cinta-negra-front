@@ -10,8 +10,8 @@ const PostPreview = ({ _id, title, author }) => {
                         { title }
                     </h2>
                 </Link>
-                <p className="post-meta">Posteado por:
-                    <Link to="#"> { author.first_name } </Link>
+                <p className="post-meta">
+                    <Link to={`author/${author._id}`}>Posteado por :{author.first_name} </Link>
                 </p>
             </div>
         </div>
