@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams } from "react-router-dom";
-import authenticate from './../utils/authenticate';
 import Layout from './../common/Layout';
 import { useQuery } from 'react-apollo-hooks';
 import gql from 'graphql-tag';
@@ -9,13 +8,13 @@ const ONE_POST = gql`
     query getOne($id:ID!){
         getPostById(id:$id){
             author{
-            first_name
+                first_name
+            }
+            title
+            content
+            cover
+        }
     }
-    title
-    content
-    cover
-    }
-}
 `;
 
 function Post() {
@@ -27,7 +26,11 @@ function Post() {
     if(loading) return <Layout>CARGANDO</Layout> 
     if(error) return <Layout head="Hubo un error, intenta de nuevo."/>
     return(
-        <Layout head={data.getPostById.title} subheading={`Post hecho por ${data.getPostById.author.first_name}`}>
+        <Layout 
+            head={ data.getPostById.title } 
+            cover={ data.getPostById.cover }
+            subheading={ `Post hecho por ${data.getPostById.author.first_name}` }
+        >
             {data.getPostById.content}
         </Layout>
     )

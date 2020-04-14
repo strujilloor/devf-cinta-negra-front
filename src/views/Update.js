@@ -1,4 +1,5 @@
 import React from 'react';
+import authHOC from './../utils/authHOC';
 // import { useParams } from 'react-router-dom';
 
 const Update = () => {
@@ -10,4 +11,4 @@ const Update = () => {
     );
 };
 
-export default Update;
+export default authHOC(Update);
