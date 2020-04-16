@@ -7,12 +7,12 @@ import gql from 'graphql-tag';
 const ONE_POST = gql`
     query getOne($id:ID!){
         getPostById(id:$id){
-            author{
-                first_name
-            }
             title
             content
             cover
+            author{
+                first_name
+            }
         }
     }
 `;
